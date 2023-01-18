@@ -129,7 +129,7 @@ function routes(app) {
     });
 
 
-    router.get('/get-docs', async (req, res) => {
+    router.get('/get-docs-month', async (req, res) => {
         try {
 
             if (token_value) {
