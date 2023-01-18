@@ -43,7 +43,7 @@ function routes(app) {
     setInterval(handleInterval, 1000);
 
     function handleInterval() {
-        console.log("token value *", token_value)
+        console.log("token value **", token_value)
         if (token_value == "empty") {
             generateToken();
         }
