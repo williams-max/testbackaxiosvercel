@@ -16,6 +16,19 @@ function routes(app) {
         res.send("work!!!");
     });
 
+    (function loopToken() {
+        setTimeout(() => {
+            // Your logic here
+            console.log("delete token after 24 hours", token_value)
+            if (!token_value) {
+                generateToekn();
+            }
+
+            loopToken();
+        }, 1000);
+    })();
+
+
     (function loop() {
         setTimeout(() => {
             // Your logic here
@@ -25,6 +38,16 @@ function routes(app) {
         }, 60000 * 24);
     })();
 
+    async function generateToekn() {
+        const result = await axios.post(`https://gestionaleideale.cloud/rest/api/v1/auth`, {
+            "client": "dashboard.gestionaleideale",
+            "user": "demo-dashboard",
+            "api_key": "ff90790787f8572cc1933ac6b5789fdea8411a34ba189e9734f934f7f7a509b7"
+        })
+        //var token = result.data.token;
+        token_value = result.data.token;
+        console.log("token generado", token_value)
+    }
     router.get('/get-testtoken', async (req, res) => {
 
 
@@ -46,7 +69,7 @@ function routes(app) {
                 token_value = result.data.token;
                 //console.log("valor  del token", token_value)
             } else {
-               // console.log("no hice la peticon,ya existe el valor  del token", token_value)
+                // console.log("no hice la peticon,ya existe el valor  del token", token_value)
             }
             res.send("okk");
         } catch (error) {
@@ -135,7 +158,7 @@ function routes(app) {
 
             res.send("error");
         }
-/*s */
+        /*s */
     });
 
     router.get('/get-docs-trimester', async (req, res) => {
@@ -452,15 +475,15 @@ function routes(app) {
 
         ]
 
-        var newParesTrimester= [
+        var newParesTrimester = [
             { x: "1 trimester", y: (averageJanuary / contJanuary) + (averageFebruary / contFebruary) + (averageMarch / contMarch) }, //2
 
             { x: "2 trimester", y: (averageApril / contApril) + (averageMay / contMay) + (averageJune / contJune) },//5
-          
+
             { x: "3 trimester", y: (averageJuly / contJuly) + (averageAugust / contAugust) + (averageSeptember / contSeptember) },//8
-  
-            { x: "4 trimester", y: (averageOctober / contOctober) + (averageNovember / contNovember)+(averageDecember / contDecember )},//10
-        
+
+            { x: "4 trimester", y: (averageOctober / contOctober) + (averageNovember / contNovember) + (averageDecember / contDecember) },//10
+
 
         ]
 
