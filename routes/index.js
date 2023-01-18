@@ -58,7 +58,6 @@ function routes(app) {
 
             if (!token_value) {
                 console.log("token no tiene valor")
-
                 // linea comentada para no generar el token en cada peticions
 
                 const result = await axios.post(`https://gestionaleideale.cloud/rest/api/v1/auth`, {
@@ -85,12 +84,9 @@ function routes(app) {
     router.get('/get-product', async (req, res) => {
         try {
 
-            if (!token_value) {
+            if (token_value) {
 
                 // linea comentada para no generar el token en cada peticions
-           
-                console.log("valor  del token", token_value)
-                //  var token = 'a2f62905aa177edfc2e002fbf7a9f9e385899ec522cee3e0630a81a51ef5cf4b';
                 const resProd = await axios.get(`https://gestionaleideale.cloud/rest/api/v1/demo-easydashboard/products`,
                     {
                         headers: {
@@ -101,6 +97,7 @@ function routes(app) {
                 )
                 res.send(resProd.data);
             } 
+
         } catch (error) {
 
             console.log(error)
@@ -116,13 +113,15 @@ function routes(app) {
     router.get('/get-docs', async (req, res) => {
         try {
 
-            if (!token_value) {
+            if (token_value) {
                 // linea comentada para no generar el token en cada peticions
+        
                 console.log("valor  del token", token_value)
                 const array = await getDocsSales();
                 //   console.log("arra", array)
                 res.send(array);
             } 
+
 
         } catch (error) {
 
@@ -130,24 +129,20 @@ function routes(app) {
 
             res.send("error");
         }
-      
+   
     });
 
     router.get('/get-docs-trimester', async (req, res) => {
         try {
 
-            if (!token_value) {
+            if (token_value) {
                 // linea comentada para no generar el token en cada peticions
-        
+          
                 console.log("valor  del token", token_value)
                 const array = await getDocsSalesTrimestres();
                 //   console.log("arra", array)
                 res.send(array);
-            } else {
-                console.log("ya existe el valor  del token", token_value)
-                const array = await getDocsSalesTrimestres();
-                res.send(array);
-            }
+            } 
 
 
         } catch (error) {
