@@ -6,7 +6,7 @@ const axios = require('axios')
 
 'use strict';
 
-var token_value = "";
+var token_value = "empty";
 
 function routes(app) {
 
@@ -44,29 +44,31 @@ function routes(app) {
 
     function handleInterval() {
         console.log("token value", token_value)
-        if (!token_value) {
+        if (token_value=="empty") {
             generateToken();
         }
     }
-
-    (function loop() {
-        setTimeout(() => {
-            // Your logic here
-            console.log("delete token after 24 hours", token_value)
-            token_value = "";
-            loop();
-        }, 60000 * 24);
-    })();
+    /*
+        (function loop() {
+            setTimeout(() => {
+                // Your logic here
+                console.log("delete token after 24 hours", token_value)
+                token_value = "empty";
+                loop();
+            }, 60000 * 24);
+        })();*/
 
     async function generateToken() {
-        const result = await axios.post(`https://gestionaleideale.cloud/rest/api/v1/auth`, {
-            "client": "dashboard.gestionaleideale",
-            "user": "demo-dashboard",
-            "api_key": "ff90790787f8572cc1933ac6b5789fdea8411a34ba189e9734f934f7f7a509b7"
-        })
-        //var token = result.data.token;
-        token_value = result.data.token;
-        console.log("token generado", token_value)
+    
+            const result = await axios.post(`https://gestionaleideale.cloud/rest/api/v1/auth`, {
+                "client": "dashboard.gestionaleideale",
+                "user": "demo-dashboard",
+                "api_key": "ff90790787f8572cc1933ac6b5789fdea8411a34ba189e9734f934f7f7a509b7"
+            })
+            //var token = result.data.token;
+            token_value = result.data.token;
+            console.log("token generado", token_value)
+        
     }
     router.get('/get-testtoken', async (req, res) => {
 
@@ -103,7 +105,7 @@ function routes(app) {
     router.get('/get-product', async (req, res) => {
         try {
 
-            if (token_value) {
+            if (token_value != "empty") {
 
                 // linea comentada para no generar el token en cada peticions
                 const resProd = await axios.get(`https://gestionaleideale.cloud/rest/api/v1/demo-easydashboard/products`,
@@ -132,7 +134,7 @@ function routes(app) {
     router.get('/get-docs-month', async (req, res) => {
         try {
 
-            if (token_value) {
+            if (token_value != "empty") {
                 // linea comentada para no generar el token en cada peticions
 
                 console.log("valor  del token", token_value)
@@ -293,7 +295,7 @@ function routes(app) {
     router.get('/get-docs-trimester', async (req, res) => {
         try {
 
-            if (token_value) {
+            if (token_value != "empty") {
                 // linea comentada para no generar el token en cada peticions
 
                 console.log("valor  del token", token_value)
