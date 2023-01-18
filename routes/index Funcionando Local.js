@@ -88,7 +88,12 @@ function routes(app) {
             if (!token_value) {
 
                 // linea comentada para no generar el token en cada peticions
-           
+                const result = await axios.post(`https://gestionaleideale.cloud/rest/api/v1/auth`, {
+                    "client": "dashboard.gestionaleideale",
+                    "user": "demo-dashboard",
+                    "api_key": "ff90790787f8572cc1933ac6b5789fdea8411a34ba189e9734f934f7f7a509b7"
+                })
+                token_value = result.data.token;
                 console.log("valor  del token", token_value)
                 //  var token = 'a2f62905aa177edfc2e002fbf7a9f9e385899ec522cee3e0630a81a51ef5cf4b';
                 const resProd = await axios.get(`https://gestionaleideale.cloud/rest/api/v1/demo-easydashboard/products`,
@@ -100,7 +105,20 @@ function routes(app) {
 
                 )
                 res.send(resProd.data);
-            } 
+            } else {
+                //en caso de que ya exista el token
+                console.log("ya existe el valor  del token", token_value)
+                const resProd = await axios.get(`https://gestionaleideale.cloud/rest/api/v1/demo-easydashboard/products`,
+                    {
+                        headers: {
+                            'Authorization': `token: ${token_value}`
+                        }
+                    }
+
+                )
+                res.send(resProd.data);
+            }
+
         } catch (error) {
 
             console.log(error)
@@ -118,11 +136,22 @@ function routes(app) {
 
             if (!token_value) {
                 // linea comentada para no generar el token en cada peticions
+                const result = await axios.post(`https://gestionaleideale.cloud/rest/api/v1/auth`, {
+                    "client": "dashboard.gestionaleideale",
+                    "user": "demo-dashboard",
+                    "api_key": "ff90790787f8572cc1933ac6b5789fdea8411a34ba189e9734f934f7f7a509b7"
+                })
+                token_value = result.data.token;
                 console.log("valor  del token", token_value)
                 const array = await getDocsSales();
                 //   console.log("arra", array)
                 res.send(array);
-            } 
+            } else {
+                console.log("ya existe el valor  del token", token_value)
+                const array = await getDocsSales();
+                res.send(array);
+            }
+
 
         } catch (error) {
 
@@ -130,7 +159,7 @@ function routes(app) {
 
             res.send("error");
         }
-      
+        /*s */
     });
 
     router.get('/get-docs-trimester', async (req, res) => {
@@ -138,7 +167,12 @@ function routes(app) {
 
             if (!token_value) {
                 // linea comentada para no generar el token en cada peticions
-        
+                const result = await axios.post(`https://gestionaleideale.cloud/rest/api/v1/auth`, {
+                    "client": "dashboard.gestionaleideale",
+                    "user": "demo-dashboard",
+                    "api_key": "ff90790787f8572cc1933ac6b5789fdea8411a34ba189e9734f934f7f7a509b7"
+                })
+                token_value = result.data.token;
                 console.log("valor  del token", token_value)
                 const array = await getDocsSalesTrimestres();
                 //   console.log("arra", array)
