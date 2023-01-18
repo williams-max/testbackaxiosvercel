@@ -15,7 +15,7 @@ function routes(app) {
 
         res.send("work!!!");
     });
-
+/*
     (async function loopToken() {
         setTimeout(() => {
            
@@ -26,8 +26,28 @@ function routes(app) {
 
             loopToken();
         }, 1000);
-    })();
+    })();*/
+/*
+    (async function loopToken() {
+        setInterval(() => {
+           
+            console.log("token value", token_value)
+            if (!token_value) {
+                generateToken();
+            }
 
+            loopToken();
+        }, 1000);
+    })();*/
+
+    setInterval(handleInterval, 1000);
+
+    function handleInterval (){
+        console.log("token value", token_value)
+        if (!token_value) {
+            generateToken();
+        }
+    }
 
     (function loop() {
         setTimeout(() => {
