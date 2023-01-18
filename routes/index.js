@@ -44,9 +44,9 @@ function routes(app) {
                 })
                 //var token = result.data.token;
                 token_value = result.data.token;
-                console.log("valor  del token", token_value)
+                //console.log("valor  del token", token_value)
             } else {
-                console.log("no hice la peticon,ya existe el valor  del token", token_value)
+               // console.log("no hice la peticon,ya existe el valor  del token", token_value)
             }
             res.send("okk");
         } catch (error) {
