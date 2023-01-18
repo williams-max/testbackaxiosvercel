@@ -6,7 +6,7 @@ const axios = require('axios')
 
 'use strict';
 
-var token_value = "empty";
+var token_value = "20a75ff367fe8a7ba6cabd971b1b7f4a84ef91273e29a38e6eb5acbae0301d90";
 
 function routes(app) {
 
@@ -40,6 +40,7 @@ function routes(app) {
             }, 1000);
         })();*/
     //ok
+    /*
     setInterval(handleInterval, 1000);
 
     function handleInterval() {
@@ -48,15 +49,7 @@ function routes(app) {
             generateToken();
         }
     }
-    /*
-        (function loop() {
-            setTimeout(() => {
-                // Your logic here
-                console.log("delete token after 24 hours", token_value)
-                token_value = "empty";
-                loop();
-            }, 60000 * 24);
-        })();*/
+  */
 
     async function generateToken() {
 
