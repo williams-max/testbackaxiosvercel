@@ -6,7 +6,7 @@ const axios = require('axios')
 
 'use strict';
 
-var token_value = "empty";
+//var token_value = "empty";
 
 function routes(app) {
 
