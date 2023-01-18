@@ -192,7 +192,7 @@ function routes(app) {
                 var contNovember = 0;//11
                 var contDecember = 0;//12
 
-                //siguente objetivo sacar un promedio de por mes de los datos
+                //siguente objetivo sacar un promedio de por mes de los datos/* */
                 for (var i = 0; i < arrP.length; i++) {
                     switch (arrP[i].month) {
                         case 1:
