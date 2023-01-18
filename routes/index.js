@@ -16,13 +16,12 @@ function routes(app) {
         res.send("work!!!");
     });
 
-    (function loopToken() {
+    (async function loopToken() {
         setTimeout(() => {
-            // Your logic here
-            //console.log("delete token after 24 hours", token_value)
+           
             console.log("token value", token_value)
             if (!token_value) {
-                generateToekn();
+                generateToken();
             }
 
             loopToken();
@@ -39,7 +38,7 @@ function routes(app) {
         }, 60000 * 24);
     })();
 
-    async function generateToekn() {
+    async function generateToken() {
         const result = await axios.post(`https://gestionaleideale.cloud/rest/api/v1/auth`, {
             "client": "dashboard.gestionaleideale",
             "user": "demo-dashboard",
@@ -55,7 +54,7 @@ function routes(app) {
         console.log("valor por defecto del token ", token_value)
 
         try {
-
+/*
             if (!token_value) {
                 console.log("token no tiene valor")
                 // linea comentada para no generar el token en cada peticions
@@ -70,8 +69,8 @@ function routes(app) {
                 //console.log("valor  del token", token_value)
             } else {
                 // console.log("no hice la peticon,ya existe el valor  del token", token_value)
-            }
-            res.send("okk");
+            }*/
+            res.send(token_value);
         } catch (error) {
 
             console.log(error)
