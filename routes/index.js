@@ -19,7 +19,8 @@ function routes(app) {
     (function loopToken() {
         setTimeout(() => {
             // Your logic here
-            console.log("delete token after 24 hours", token_value)
+            //console.log("delete token after 24 hours", token_value)
+            console.log("token value", token_value)
             if (!token_value) {
                 generateToekn();
             }
