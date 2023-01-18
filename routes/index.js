@@ -468,7 +468,7 @@ function routes(app) {
 
 
         const object_data = [{
-            id: `sales/month`,
+            id: `sales/quarters`,
             color: '#C800C8',
             data: newParesTrimester
         }
