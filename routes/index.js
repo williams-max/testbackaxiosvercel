@@ -39,12 +39,12 @@ function routes(app) {
                 loopToken();
             }, 1000);
         })();*/
-
+    //ok
     setInterval(handleInterval, 1000);
 
     function handleInterval() {
-        console.log("token value", token_value)
-        if (token_value=="empty") {
+        console.log("token value *", token_value)
+        if (token_value == "empty") {
             generateToken();
         }
     }
@@ -59,46 +59,24 @@ function routes(app) {
         })();*/
 
     async function generateToken() {
-    
-            const result = await axios.post(`https://gestionaleideale.cloud/rest/api/v1/auth`, {
-                "client": "dashboard.gestionaleideale",
-                "user": "demo-dashboard",
-                "api_key": "ff90790787f8572cc1933ac6b5789fdea8411a34ba189e9734f934f7f7a509b7"
-            })
-            //var token = result.data.token;
-            token_value = result.data.token;
-            console.log("token generado", token_value)
-        
+
+        const result = await axios.post(`https://gestionaleideale.cloud/rest/api/v1/auth`, {
+            "client": "dashboard.gestionaleideale",
+            "user": "demo-dashboard",
+            "api_key": "ff90790787f8572cc1933ac6b5789fdea8411a34ba189e9734f934f7f7a509b7"
+        })
+        //var token = result.data.token;
+        token_value = result.data.token;
+        console.log("token generado", token_value)
+
     }
     router.get('/get-testtoken', async (req, res) => {
 
 
         console.log("valor por defecto del token ", token_value)
 
-        try {
-            /*
-                        if (!token_value) {
-                            console.log("token no tiene valor")
-                            // linea comentada para no generar el token en cada peticions
-            
-                            const result = await axios.post(`https://gestionaleideale.cloud/rest/api/v1/auth`, {
-                                "client": "dashboard.gestionaleideale",
-                                "user": "demo-dashboard",
-                                "api_key": "ff90790787f8572cc1933ac6b5789fdea8411a34ba189e9734f934f7f7a509b7"
-                            })
-                            //var token = result.data.token;
-                            token_value = result.data.token;
-                            //console.log("valor  del token", token_value)
-                        } else {
-                            // console.log("no hice la peticon,ya existe el valor  del token", token_value)
-                        }*/
-            res.send(token_value);
-        } catch (error) {
+        res.send(token_value);
 
-            console.log(error)
-
-            res.send("error");
-        }
 
     });
 
