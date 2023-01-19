@@ -3,7 +3,7 @@ const router = express.Router();
 const fs = require('fs');
 const axios = require('axios')
 //const { translate } = require('free-translate');
-var cron = require('node-cron');
+
 'use strict';
 
 //var token_value = "20a75ff367fe8a7ba6cabd971b1b7f4a84ef91273e29a38e6eb5acbae0301d90";
@@ -15,19 +15,32 @@ function routes(app) {
 
         res.send("work!!!");
     });
-
-    cron.schedule("*/3 * * * * *",async function () {
-        console.log("running a task every 3 second");
-        console.log("token value ",token_value)
-        if (token_value == "empty") {
-           await generateToken();
-        }
-    });
     /*
-    cron.schedule('* * * * *', () => {
-        console.log('running a task every minute');
-      });*/
+        (async function loopToken() {
+            setTimeout(() => {
+               
+                console.log("token value", token_value)
+                if (!token_value) {
+                    generateToken();
+                }
+    
+                loopToken();
+            }, 1000);
+        })();*/
     /*
+        (async function loopToken() {
+            setInterval(() => {
+               
+                console.log("token value", token_value)
+                if (!token_value) {
+                    generateToken();
+                }
+    
+                loopToken();
+            }, 1000);
+        })();*/
+    //ok
+    
     setInterval(handleInterval, 1000);
 
     function handleInterval() {
@@ -35,8 +48,8 @@ function routes(app) {
         if (token_value == "empty") {
             generateToken();
         }
-    }*/
-
+    }
+  
 
     async function generateToken() {
 
