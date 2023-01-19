@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 const fs = require('fs');
 const axios = require('axios')
-//const { translate } = require('free-translate');
+
+const storage = require('node-persist');
+
+
+
 var cron = require('node-cron');
 'use strict';
 
@@ -19,23 +23,30 @@ function routes(app) {
     cron.schedule("*/3 * * * * *", async function () {
         console.log("running a task every 3 second");
         console.log("token value ", token_value)
+        await storage.init();
+        console.log("node persist", await storage.getItem('token_value'));
         if (token_value == "empty") {
             await generateToken();
+            //await pesistDate()
         }
     });
     /*
-    cron.schedule('* * * * *', () => {
-        console.log('running a task every minute');
-      });*/
-    /*
-    setInterval(handleInterval, 1000);
+        ( function loopToken() {
+            setTimeout(async () => {
+                // Your logic 
+                await storage.init( );
+        
+    
+                loopToken();
+            }, 1000);
+        })();*/
 
-    function handleInterval() {
-        console.log("token value **", token_value)
-        if (token_value == "empty") {
-            generateToken();
-        }
-    }*/
+    async function pesistDate() {
+        //you must first call storage.init
+        // await storage.init( /* options ... */);
+        //await storage.setItem('name', 'roberto')
+        console.log("node persist", await storage.getItem('token_value'));
+    }
 
 
     async function generateToken() {
@@ -47,7 +58,10 @@ function routes(app) {
                 "api_key": "ff90790787f8572cc1933ac6b5789fdea8411a34ba189e9734f934f7f7a509b7"
             })
             //var token = result.data.token;
-            token_value = result.data.token;
+            token_value = await result.data.token;
+
+            await storage.init( /* options ... */);
+            await storage.setItem('token_value', token_value.toString())
             console.log("token generado", token_value)
 
         } catch (error) {
@@ -55,6 +69,44 @@ function routes(app) {
             console.log(error)
 
             res.send(error);
+        }
+
+    }
+
+    router.get('/get-token-storage', async (req, res) => {
+
+        await storage.init();
+        console.log("node persist", await storage.getItem('token_value'));
+        var token_storage = await storage.setItem('token_value', token_value.toString())
+
+        res.send(token_storage);
+
+
+    });
+
+    async function tokenVild() {
+        try {
+
+
+            await storage.init();
+            var token_storage = await storage.setItem('token_value', token_value.toString())
+            // linea comentada para no generar el token en cada peticions
+            const resProd = await axios.get(`https://gestionaleideale.cloud/rest/api/v1/demo-easydashboard/products`,
+                {
+                    headers: {
+                        'Authorization': `token: ${token_storage}`
+                    }
+                }
+
+            )
+            console.log(" res prod ", resProd)
+            return "true";
+
+        } catch (error) {
+
+            // console.log(error)
+            return "false"
+
         }
 
     }
@@ -589,7 +641,46 @@ function routes(app) {
         return object_data;
     }
 
+    router.get('/get-token-valid', async (req, res) => {
+        try {
+
+            if (token_value != "empty") {
+
+                // linea comentada para no generar el token en cada peticions
+                const resProd = await axios.get(`https://gestionaleideale.cloud/rest/api/v1/demo-easydashboard/products`,
+                    {
+                        headers: {
+                            'Authorization': `token: ${token_value}`
+                        }
+                    }
+
+                )
+                res.send("true");
+
+            } else {
+                res.send("false");
+            }
+
+        } catch (error) {
+
+            console.log(error)
+
+            res.send(errok);
+        }
+
+
+
+    });
+
+
+
     return router;
 };
 
 module.exports = routes;
+
+
+/*
+   cron.schedule('* * * * *', () => {
+       console.log('running a task every minute');
+     });*/
