@@ -15,7 +15,7 @@ var token_value = "empty";
 
 const connection = mysql.createConnection({
     host: 'mysql-chevy.alwaysdata.net',
-    user: 'checy_free',
+    user: 'chevy_free',
     password: 'adivinala',
     database: 'chevy_logsdb'
 })
