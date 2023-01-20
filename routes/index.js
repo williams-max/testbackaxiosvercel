@@ -14,10 +14,10 @@ var token_value = "empty";
 
 
 const connection = mysql.createConnection({
-    host: 'db4free.net',
-    user: 'rootalmanza1',
-    password: 'mTNN!_cHrGUx74r',
-    database: 'logsdbb1'
+    host: 'mysql-chevy.alwaysdata.net',
+    user: 'checy_free',
+    password: 'adivinala',
+    database: 'chevy_logsdb'
 })
 
 connection.connect(
