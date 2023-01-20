@@ -128,7 +128,7 @@ function routes(app) {
             return await tokenGenerado;
         }
     }
-    //console.log("toke funcion ", await validoToken());
+  
 
     async function getInfo() {
         // console.log("entre a get Info");
@@ -138,39 +138,9 @@ function routes(app) {
         return results[0]
     }
 
-    async function getTokenDb() {
-        connection.query('SELECT * FROM logs_tokens ORDER by ID DESC LIMIT 1', function (error, rows) {
-            if (error) {
-                throw error
-            } else {
-                console.log("rows ", rows)
-                /*
-                rows.forEach(element => {
-                    console.log(element.token)
-             
-               
-           
-                  //  return element.token;
-                });*/
-            }
-        })
+  
 
-    }
-
-
-    /*
-        ( function loopToken() {
-            setTimeout(async () => {
-                // Your logic 
-                await storage.init( );
-        
-    
-                loopToken();
-            }, 1000);
-        })();*/
-
-
-
+  
     async function generateToken() {
         try {
 
@@ -200,71 +170,17 @@ function routes(app) {
         }
 
     }
-    /*
-        router.get('/get-token-storage', async (req, res) => {
-    
-            await storage.init();
-            console.log("node persist", await storage.getItem('token_value'));
-            var token_storage = await storage.setItem('token_value', token_value.toString())
-    
-            res.send(token_storage);
-    
-    
-        });*/
 
-    async function tokenVald(token_code) {
-        /*    try {
     
-    
-                console.log("entre a seccion de otken valid", token_code)
-    
-                const resProd = await axios.get(`https://gestionaleideale.cloud/rest/api/v1/demo-easydashboard/products`,
-                    {
-                        headers: {
-                            'Authorization': `token: ${token_code}`
-                        }
-                    }
-    
-                )
-                //console.log(" res prod ", resProd.data)
-                return "true";
-    
-            } catch (error) {
-    
-                // console.log(error)
-                return "false"
-    
-            }*/
 
-        const resProd = await axios.get(`https://gestionaleideale.cloud/rest/api/v1/demo-easydashboard/products`,
-            {
-                headers: {
-                    'Authorization': `token: ${token_code}`
-                }
-            }
-
-        ).then(
-            res => {
-
-                console.log(res.data)
-                return "true";
-
-            }
-        ).catch(
-            err => {
-                console.log(err);
-                return "false";
-            }
-        );
-
-
-    }
     router.get('/get-testtoken', async (req, res) => {
 
 
         console.log("valor por defecto del token ", token_value)
 
-        res.send(token_value);
+        const valido=await validoToken();
+
+        res.send(valido);
 
 
     });
